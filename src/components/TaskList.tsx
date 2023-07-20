@@ -1,6 +1,14 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SectionList,
+  // FlatList,
+} from 'react-native';
 import {TaskItems} from '../types/types';
+import {createListData} from '../utils/utils';
 
 interface TaskListProps {
   tasks: TaskItems[];
@@ -8,11 +16,41 @@ interface TaskListProps {
 }
 
 const TaskList: React.FC<TaskListProps> = ({tasks, onDeleteTask}) => {
+  const renderSectionHeader = ({
+    section: {title},
+  }: {
+    section: {title: string};
+  }) => <Text style={styles.sectionHeader}>{title}</Text>;
+
+  const renderTaskItem = ({item, index}: {item: TaskItems; index: number}) => {
+    return (
+      <View style={styles.taskItem}>
+        <View style={styles.itemConatiner}>
+          <Text style={styles.textStyle}>{item.taskName}</Text>
+        </View>
+
+        <TouchableOpacity
+          style={styles.deleteButtonContainer}
+          onPress={() => onDeleteTask(item.id)}>
+          <Text style={styles.deleteButton}>{'Delete'}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.listContainer}>
       <Text style={styles.listHeader}>{'List of Tasks'}</Text>
 
-      <FlatList
+      <SectionList
+        sections={createListData(tasks)}
+        renderItem={renderTaskItem}
+        renderSectionHeader={renderSectionHeader}
+        keyExtractor={item => item.id.toString()}
+        showsVerticalScrollIndicator={false}
+      />
+
+      {/* <FlatList
         data={tasks}
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => (
@@ -29,7 +67,7 @@ const TaskList: React.FC<TaskListProps> = ({tasks, onDeleteTask}) => {
           </View>
         )}
         keyExtractor={item => item.id.toString()}
-      />
+      /> */}
     </View>
   );
 };
@@ -69,6 +107,12 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     color: 'red',
+  },
+  sectionHeader: {
+    backgroundColor: '#f9f9f9',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    fontWeight: 'bold',
   },
 });
 

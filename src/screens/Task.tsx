@@ -8,37 +8,47 @@ import {TaskItems} from '../types/types';
 const Task = () => {
   const [taskInput, setTaskInput] = useState<string>('');
   const [tasks, setTasks] = useState<TaskItems[]>([]);
+  const [filteredTasks, setFilteredTasks] = useState<TaskItems[]>([]);
 
   const handleAddTask = () => {
     if (taskInput.trim() !== '') {
       const newTask: TaskItems = {
         id: Date.now(),
-        text: taskInput,
+        taskName: taskInput,
       };
       setTasks([...tasks, newTask]);
       setTaskInput('');
+      filterTasks([...tasks, newTask]);
     } else {
       alert('Remove unwanted things to add the task');
     }
   };
 
+  const filterTasks = (taskArray: TaskItems[]) => {
+    const filteredTasks = taskArray.sort((a, b) =>
+      a.taskName.localeCompare(b.taskName),
+    );
+    setFilteredTasks(filteredTasks);
+  };
+
   const handleDeleteTask = (taskId: number) => {
     const filteredItems = tasks.filter(task => task.id !== taskId);
     setTasks(filteredItems);
+    filterTasks(filteredItems);
   };
 
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder="Enter a task..."
+        placeholder={'Enter a task...'}
         value={taskInput}
         onChangeText={text => setTaskInput(text)}
       />
 
-      {taskInput && <Button title="Add Task" onPress={handleAddTask} />}
+      {taskInput && <Button title={'Add Task'} onPress={handleAddTask} />}
 
       {tasks && tasks?.length > 0 && (
-        <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
+        <TaskList tasks={filteredTasks} onDeleteTask={handleDeleteTask} />
       )}
     </View>
   );

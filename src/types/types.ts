@@ -1,4 +1,9 @@
 export interface TaskItems {
   id: number;
-  text: string;
+  taskName: string;
+}
+
+export interface Section {
+  title: string;
+  data: TaskItems[];
 }
