@@ -23,7 +23,8 @@ const Task = () => {
   };
 
   const handleDeleteTask = (taskId: number) => {
-    setTasks(tasks.filter(task => task.id !== taskId));
+    const filteredItems = tasks.filter(task => task.id !== taskId);
+    setTasks(filteredItems);
   };
 
   return (

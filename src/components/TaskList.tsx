@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   listHeader: {
     fontSize: 18,
     fontWeight: '500',
+    color: '#000',
     paddingBottom: 10,
   },
   taskItem: {

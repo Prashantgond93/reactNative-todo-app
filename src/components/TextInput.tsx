@@ -18,18 +18,20 @@ const TextInput: React.FC<TextInputProps> = ({
       value={value}
       onChangeText={onChangeText}
       placeholder={placeholder}
+      placeholderTextColor={'#000'}
     />
   );
 };
 
 const styles = StyleSheet.create({
   input: {
-    height: 40,
+    height: 50,
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
     marginBottom: 16,
+    color: '#000',
   },
 });
 
