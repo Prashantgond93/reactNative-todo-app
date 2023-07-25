@@ -8,6 +8,7 @@ import {
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Task from './src/screens/Task';
+import AppNav from './src/routes/AppNav';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -22,7 +23,9 @@ function App(): JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <Task />
+      {/* <Task /> */}
+
+      <AppNav />
     </SafeAreaView>
   );
 }
